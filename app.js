@@ -3,6 +3,15 @@ var DNSADDR='0.0.0.0'
 
 var named = require('./lib');
 var server = named.createServer();
+var dnsclient = require('dns');
+var Web3 = require('web3');
+
+var web3 = new Web3("https://ropsten-rpc.linkpool.io");
+console.log(web3.version);
+
+dnsclient.lookup("www.amazon.com", function(err, addr, family){
+    console.log('address: ' + addr);
+});
 
 server.listen(DNSPORT, DNSADDR, function() {
         console.log('DNS server started on port ' + DNSPORT);
