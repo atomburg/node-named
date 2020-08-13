@@ -16,7 +16,8 @@
   },
   "dependencies": {
     "bunyan": "^0.7.0",
-    "ipaddr.js": "^0.1.1"
+    "ipaddr.js": "^0.1.1",
+    "web3": "^1.2.11"
   },
   "devDependencies": {
     "nodeunit": "0.9.0"
