@@ -42,7 +42,7 @@ function do_blockchain_resolve(query, domain, type){
             return ;
         }
 
-        //console.log(r);
+        console.log(r);
         try{ r = JSON.parse(r); }catch(e){}
 
         switch (type) {
