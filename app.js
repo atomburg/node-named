@@ -21,11 +21,11 @@ function is_onelettertld(domain){
 } 
 
 server.on('clientError', function(error) {
-        console.log("there was a clientError: %s", error);
+        console.log("there was a clientError: " + error);
 });
 
 server.on('uncaughtException', function(error) {
-        console.log("there was an excepton: %s", error.message());
+        console.log("there was an excepton: " + error);
 });
 
 server.listen(DNSPORT, DNSADDR, function() {
