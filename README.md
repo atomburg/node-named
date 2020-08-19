@@ -2,6 +2,14 @@
 
 1. nodejs
 
+- for  linux
+```bash
+$ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+```
+
+- for windows
+[download nodejs](https://nodejs.org/en/download/)
+
 # Install
 
 ```bash
