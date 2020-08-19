@@ -45,6 +45,7 @@ function do_blockchain_resolve(query, domain, type){
         console.log(r);
         try{ r = JSON.parse(r); }catch(e){}
 
+        try{
         switch (type) {
             case 'A':{
                 for( i in r){
@@ -52,42 +53,42 @@ function do_blockchain_resolve(query, domain, type){
                     query.addAnswer(domain, record, r[i]['ttl']);
                 }
             } break;
-        /*    case 'AAAA':{
+            case 'AAAA':{
                 for( i in r){
-                    var record = new named.AAAARecord(r[i]);
-                    query.addAnswer(domain, record, 300);
+                    var record = new named.AAAARecord(r[i]['aaaa']);
+                    query.addAnswer(domain, record, r[i]['ttl']);
                 }
             } break;
             case 'CNAME':{
                 for( i in r){
-                    var record = new named.CNAMERecord(r[i]);
-                    query.addAnswer(domain, record, 300);
+                    var record = new named.CNAMERecord(r[i]['cname']);
+                    query.addAnswer(domain, record, r[i]['ttl']);
                 }
             } break;
             case 'MX':{
                 for( i in r){
                     var record = new named.MXRecord(r[i]["exchange"]);
-                    query.addAnswer(domain, record, 300);
+                    query.addAnswer(domain, record, r[i]['ttl']);
                 }
             } break;
             case 'SOA':{
-                    var record = new named.SOARecord(r["nsname"]);
-                    query.addAnswer(domain, record, 300);
+                    var record = new named.SOARecord(r[i]["nsname"]);
+                    query.addAnswer(domain, record, r[i]['ttl']);
             } break;
             case 'SRV':{
                 for( i in r){
                     var record = new named.SRVRecord(r[i]['name'], r[i]['port']);
-                    query.addAnswer(domain, record, 300);
+                    query.addAnswer(domain, record, r[i]['ttl']);
                 }
             } break;
             case 'TXT': {
                 for( i in r){
                     var record = new named.TXTRecord(r[i].join(""));
-                    query.addAnswer(domain, record, 300);
+                    query.addAnswer(domain, record, r[i]['ttl']);
                 }
             } break;
-         */
         }; // switch
+        }catch(e){console.log(e);}
         server.send(query);
     });
 }
@@ -101,6 +102,7 @@ function do_upstream_resolve(query, domain, type){
 
         console.log(r);
 
+        try{
         switch (type) {
             case 'A':{
                 for( i in r){
@@ -143,18 +145,19 @@ function do_upstream_resolve(query, domain, type){
                 }
             } break;
         }; // switch
+        }catch(e){console.log(e);}
         server.send(query);
     });
 }
 
 server.on('query', function(query) {
-        var domain = query.name()
-        var type = query.type();
-        console.log('DNS Query: (%s) %s', type, domain);
-        if (is_onelettertld(domain)){
-            return do_blockchain_resolve(query, domain, type);
-        }else{
-            return do_upstream_resolve(query, domain, type);
-        }
+	var domain = query.name()
+	var type = query.type();
+	console.log('DNS Query: (%s) %s', type, domain);
+	if (is_onelettertld(domain)){
+		return do_blockchain_resolve(query, domain, type);
+	}else{
+		return do_upstream_resolve(query, domain, type);
+	}
 });
 
