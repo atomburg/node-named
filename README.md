@@ -13,6 +13,8 @@ $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bas
 # Install
 
 ```bash
+# git clone https://github.com/atomburg/node-named
+# cd node-named
 # npm install 
 ```
 
